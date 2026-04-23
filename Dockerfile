@@ -1,0 +1,13 @@
+FROM node:18-slim
+
+RUN apt-get update && apt-get install -y python3 python3-pip && \
+    pip3 install --upgrade yt-dlp && \
+    apt-get clean
+
+WORKDIR /app
+COPY package*.json ./
+RUN npm install
+COPY . .
+
+EXPOSE 3001
+CMD ["node", "server.js"]
